@@ -2,6 +2,8 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useForm, Controller } from 'react-hook-form';
+import { formsRequest } from '../components/UsersMethods';
 
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -23,9 +25,19 @@ const CssTextField = styled(TextField)({
   },
 });
 
+type Inputs = {
+  email: string;
+  username: string;
+  password: string;
+};
+
 export function SignUpPage() {
+  const { control, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit = async (data: Inputs) => await formsRequest('signup', data);
   return (
     <Box
+      onSubmit={handleSubmit(onSubmit)}
       className="container mx-auto max-w-2xl pt-5"
       component="form"
       noValidate
@@ -35,10 +47,27 @@ export function SignUpPage() {
         gap: 2,
       }}
     >
-      <CssTextField className="" label="Email" id="custom-css-outlined-input" />
-      <CssTextField label="Login" id="custom-css-outlined-input" />
-      <CssTextField label="Password" id="custom-css-outlined-input" />
-      <Button variant="contained">Save</Button>
+      <Controller
+        render={({ field }) => <CssTextField label="Email" {...field} />}
+        name="email"
+        control={control}
+        defaultValue=""
+      />
+      <Controller
+        render={({ field }) => <CssTextField label="Login" {...field} />}
+        name="username"
+        control={control}
+        defaultValue=""
+      />
+      <Controller
+        render={({ field }) => <CssTextField label="Password" {...field} />}
+        name="password"
+        control={control}
+        defaultValue=""
+      />
+      <Button type="submit" variant="contained">
+        Save
+      </Button>
     </Box>
   );
 }
