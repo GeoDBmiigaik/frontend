@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useForm, Controller } from 'react-hook-form';
-import { formsRequest } from '../components/UsersMethods';
+import { formsRequest } from '../components/Users/UsersMethods';
 
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -34,7 +34,7 @@ type Inputs = {
 export function SignUpPage() {
   const { control, handleSubmit } = useForm<Inputs>();
 
-  const onSubmit = async (data: Inputs) => await formsRequest('signup', data);
+  const onSubmit = async (data: Inputs) => console.log(await formsRequest('signup', 'post', data));
   return (
     <Box
       onSubmit={handleSubmit(onSubmit)}

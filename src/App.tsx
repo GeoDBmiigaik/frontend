@@ -4,17 +4,52 @@ import { AboutPage } from './pages/AboutPage';
 import { Navigation } from './components/Navigation';
 import { SignUpPage } from './pages/SignUpPage';
 import { SignInPage } from './pages/SignInPage';
+import { AppContext } from './components/App/AppContext';
+import { useEffect, useState } from 'react';
+import { formsRequest, responseData, unauthenticatedState } from './components/Users/UsersMethods';
 
 function App() {
+  const [user, setUser] = useState(unauthenticatedState);
+  console.log(user);
+
+  const sessionControl = async () => await formsRequest('session', 'get');
+  useEffect(() => {
+    sessionControl().then((response: responseData) => {
+      if (response.user) {
+        setUser({ credentials: response.user.credentials });
+      } else {
+        setUser({ credentials: unauthenticatedState.credentials });
+      }
+    });
+  }, []);
+
   return (
     <>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<ProductsPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-      </Routes>
+      <AppContext.Provider
+        value={{
+          userContext: user,
+          setUserContext: (newUser) => {
+            setUser(newUser);
+          },
+        }}
+      >
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<ProductsPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          {user.credentials[0] == 'anonymous' ? (
+            <>
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/signin" element={<SignInPage />} />
+            </>
+          ) : (
+            <>
+              <Route path="/signup" element={<ProductsPage />} />
+              <Route path="/signin" element={<ProductsPage />} />
+            </>
+          )}
+        </Routes>
+      </AppContext.Provider>
     </>
   );
 }
