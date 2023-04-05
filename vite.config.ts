@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       // string shorthand: http://localhost:5173/foo -> http://localhost:4567/foo
-      '/api': 'http://backend:8000',
+      '/api': 'http://localhost:8000',
     },
   },
 });

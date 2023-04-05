@@ -21,6 +21,9 @@ export function Navigation() {
             <Button color="inherit" href="/">
               Home
             </Button>
+            <Button color="inherit" href="/tables">
+              My tables
+            </Button>
             {userContext.credentials[0] == 'anonymous' ? (
               <>
                 <Button color="inherit" href="/signin">

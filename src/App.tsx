@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { ProductsPage } from './pages/ProductsPage';
 import { AboutPage } from './pages/AboutPage';
+import { MyTables } from './pages/MyTables';
 import { Navigation } from './components/Navigation';
 import { SignUpPage } from './pages/SignUpPage';
 import { SignInPage } from './pages/SignInPage';
@@ -41,9 +42,11 @@ function App() {
             <>
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/signin" element={<SignInPage />} />
+              <Route path="/tables" element={<ProductsPage />} />
             </>
           ) : (
             <>
+              <Route path="/tables" element={<MyTables />} />
               <Route path="/signup" element={<ProductsPage />} />
               <Route path="/signin" element={<ProductsPage />} />
             </>
