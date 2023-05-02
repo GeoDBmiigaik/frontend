@@ -7,11 +7,13 @@ export interface TableInterface {
 }
 
 export function Table(props: TableInterface) {
+    console.log(props['columns'][0]['field'])
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={props['rows']}
         columns={props['columns']}
+        getRowId={(row) => row.gid}
         initialState={{
           pagination: {
             paginationModel: {

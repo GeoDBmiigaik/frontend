@@ -4,7 +4,6 @@ import { tablesRequest } from '../components/Tables/TablesMethods';
 
 export function MyTables() {
   const [tables, setTables] = useState([]);
-  tables.length > 0 ? console.log(tables[0]) : console.log('[]');
   const getTables = async () => await tablesRequest('singtable', 'get');
 
   useEffect(() => {
