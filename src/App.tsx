@@ -5,9 +5,11 @@ import { MyTables } from './pages/MyTables';
 import { Navigation } from './components/Navigation';
 import { SignUpPage } from './pages/SignUpPage';
 import { SignInPage } from './pages/SignInPage';
+import { AdminPage } from './pages/AdminPage';
 import { AppContext } from './components/App/AppContext';
 import { useEffect, useState } from 'react';
 import { formsRequest, responseData, unauthenticatedState } from './components/Users/UsersMethods';
+import { Button } from '@mui/material';
 
 function App() {
   const [user, setUser] = useState(unauthenticatedState);
@@ -38,6 +40,13 @@ function App() {
         <Routes>
           <Route path="/" element={<ProductsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          {user.credentials.includes('admin') ? (
+            <>
+              <Route path="/admin" element={<AdminPage />} />
+            </>
+          ) : (
+            <></>
+          )}
           {user.credentials[0] == 'anonymous' ? (
             <>
               <Route path="/signup" element={<SignUpPage />} />

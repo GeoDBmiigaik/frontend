@@ -24,6 +24,15 @@ export function Navigation() {
             <Button color="inherit" href="/tables">
               My tables
             </Button>
+            {userContext.credentials.includes('admin') ? (
+              <>
+                <Button color="inherit" href="/admin">
+                  Управление
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
             {userContext.credentials[0] == 'anonymous' ? (
               <>
                 <Button color="inherit" href="/signin">
